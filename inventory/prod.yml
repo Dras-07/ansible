@@ -1,0 +1,6 @@
+---
+
+admin:
+ hosts :
+    local :
+     ansible_connection : local
