@@ -1,23 +1,6 @@
 ---
-- name : jenkins installation
-  get_url:
-       url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
-       dest: /etc/yum.repos.d/jenkins.repo
-
-- name : Import jenkins key
-  ansible.builtin.rpm_key:
-       state: present
-       key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-
-- name : Install Jenkins
-  apt:
-      name: jenkins
-      state: latest
-- name: daemon-reload to pick up config changes
-  ansible.builtin.systemd:
-      daemon_reload: yes
-
-- name: Start jenkins
-  ansible.builtin.systemd:
-      name: jenkins
-      state: started
+- name : install git
+  apt : 
+   name : git
+   status : present
+   

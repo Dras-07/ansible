@@ -1,0 +1,34 @@
+---
+- name: set list
+  set_facts : 
+   list1: ["/etc/test","/etc/motd"]
+
+- name : Print list1
+  debug : var = list1
+
+- name: Register variable motd
+  ansible.builtin.shell: cat /etc/motd
+  register: motd_contents
+
+- name: Use the motd variable in conditional statement
+  ansible.builtin.shell: echo "motd contains the word hi"
+  when: motd_contents.stdout.find('hi') != -1
+
+- name : Register variable test
+  ansible.builtin.shell: cat /etc/test
+  register: test_contents
+
+- name : Use the test variable in conditional statement
+  ansible.builtin.shell : echo "test contains the word hi"
+  when: test_contents.stdout.find('hi') != 0
+- item: "hello"
+
+
+- name : Copy files 
+  ansible.builtin.copy: 
+   src : /etc/copy
+   dest : /etc/test
+   follow : no
+
+  
+   

@@ -1,0 +1,17 @@
+---
+ - hosts : admin
+   gather_facts: true
+   roles :
+   - role : jenkins
+     tags : [ jenkins ]
+   - role : git
+     tags : [ git ]
+   - role : loop
+     tags : [ loop ]
+   - role : reg
+     tags : [ register ]
+   - role : items
+     tags : [items]
+     vars :
+       fruit : banana
+       car : honda

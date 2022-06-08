@@ -1,0 +1,17 @@
+---
+
+- name: Intialization
+  ansible.builtin.command : echo "hello"
+- name: test
+  ansible.builtin.debug :
+     msg : "result: {{fruits}}"
+- name : test2
+  ansible.builtin.debug :
+    msg : "results: {{name}}"
+
+
+- name: add several user
+  ansible.builtin.debug :
+    msg : "results: {{item}}"
+  with_items :
+     - "{{ nested_list }} "

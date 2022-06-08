@@ -1,0 +1,23 @@
+# variable 
+#this file is for group named "all"
+
+name: anjanay
+path: /etc/ansible
+
+
+nested_list:
+ - - one
+   - two
+   - three
+
+fruit: banana
+car : honda
+
+
+#  software_list
+software_list:
+ - - vim
+   - curl
+   - unzip
+
+

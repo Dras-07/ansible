@@ -1,0 +1,13 @@
+---
+- name : installation & update
+  apt: 
+   name : {{item}}
+   update_cache : yes
+   with_items: 
+    - "{{software_list}}"
+
+
+
+
+
+   
