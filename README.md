@@ -24,5 +24,12 @@
   <h2> Roles </h2>
   <li> Ansible will look for roles in "roles/role_name/tasks/main.yml" directory. </li>
   <li> We run a particular role with the help of tags. These tags will have the same name as the role_name </li>
+  
+  <h2> Hostfile </h2>
+  <li> Hostfile path is /etc/ansible/hosts </li>
+  <li> You can add the hosts here  </li>
+  <h2> Ansible.cfg </h2>
+  <li> Path is /etc/ansible/ansible.cfg </li>
+  <li> Configure the paths to host file and inventory_file </li>
 </ul>
 
