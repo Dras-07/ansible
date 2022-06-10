@@ -3,9 +3,12 @@
 
 <h3> Commands: </h3>
 
-<p>ansible-playbook -i inventory/prod.yml site.yml --tags "jenkins" </p>
-<p>ansible-playbook -i inventory/prod.yml site.yml --tags "install"  </p>
-<p> ansible-playbook -i inventory/prod.yml site.yml --tags "items"  </p>
+```bash
+ansible-playbook -i inventory/prod.yml site.yml --tags "jenkins" 
+ansible-playbook -i inventory/prod.yml site.yml --tags "install"  
+ansible-playbook -i inventory/prod.yml site.yml --tags "items"  
+```
+
 
 
 <h3> Configuration </h3>
