@@ -40,6 +40,9 @@ ansible-playbook -i inventory/prod.yml site.yml --tags "items"
     <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable'> Ansible variable_precedence 
     </a>
   </li>
+  <hr>
+  <li>
+    <a href="https://stackoverflow.com/questions/33896847/how-do-i-set-register-a-variable-to-persist-between-plays-in-ansible">Using Register Variable Across hosts </a>
     
 </ul>
 
