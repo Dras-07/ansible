@@ -1,0 +1,19 @@
+---
+
+
+package_names:
+ - maven
+ - python3.9
+ - openjdk-11-jdk
+ - libxcb-xinerama0
+
+
+arguments: #add arguments
+
+product_id : # add product_id
+
+
+metashape_directory: # add directory_path
+
+
+metashape_version: _1_8_3_

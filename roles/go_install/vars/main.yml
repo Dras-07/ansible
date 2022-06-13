@@ -1,0 +1,14 @@
+---
+
+
+home_dir:
+#path of home directory
+
+
+
+# add the latest version
+new_go_version:
+ 1.18.3
+
+
+  

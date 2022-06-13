@@ -1,0 +1,27 @@
+---
+
+- hosts : admin
+  gather_facts: true
+  roles : 
+  - role : helm
+    tags : [ helm ]
+  - role : tusd
+    tags : [ tusd ]
+  - role :  go_install 
+    tags : [ go ] 
+  - role : metashape
+    tags : [ metashape ]
+  - role : postgres
+    tags : [postgres]
+  
+# - hosts : server1
+
+
+
+#- hosts : server2
+
+
+#- hosts : server2
+
+
+

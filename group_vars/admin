@@ -1,0 +1,2 @@
+#  tusd_variable
+tusd_build : /usr/local/go/bin/go build -o tusd cmd/tusd/main.go

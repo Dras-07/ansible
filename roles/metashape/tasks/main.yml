@@ -1,0 +1,45 @@
+---
+ 
+- name : Install Packages
+  apt:
+   name: "{{item}}"
+   state: present
+   with_items: 
+    - "{{package_names}}"
+
+- name: Metashape Install
+  win_package : 
+    path : https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape-pro{{metashape_version}}x64.msi
+    product_id : "{{product_id}}"
+    state: present
+
+
+- name: Clone Deepmatrix Metashape
+  command: git clone https://github.com/DeepMatrixIO/metashape-job.git && cd metashape-job
+  dest : "{{metashape_directory}}"
+  become : true
+  register : git_clone
+- debug : 
+     var : git_clone.stdout_line
+- debug : 
+     var : git_clone.stderr_line
+
+
+#    Same as above
+
+# - name: Clone Deepmatrix Metashape
+#   ansible.builtin.git:
+#     repo: https://github.com/DeepMatrixIO/metashape-job.git
+#     dest: "{{metashape_directory}}"
+#     separate_git_dir: /src/metashape-job.git
+
+
+
+- name : Execute Metashape
+  command: mvn exec:java -Dexec.mainClass="io.deepmatrix.compute.JobScheduler"
+  become : true
+  register : metashape_exec
+- debug : 
+     var : metashape_exec.stdout_line
+- debug : 
+     var : metashape_exec.stderr_line

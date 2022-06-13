@@ -1,0 +1,33 @@
+---
+
+
+# all:
+#  children:
+#   admin:
+#   allserver:
+
+
+
+admin:
+ hosts :
+    local :
+     ansible_connection : local
+
+
+
+# allservers:
+#  children:
+#   server1:
+#   server2:
+
+# server1:
+#  hosts:
+#    #hostnames
+
+
+# server2:
+#   hosts:
+#     #hostnames
+
+
+   

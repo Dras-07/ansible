@@ -1,0 +1,40 @@
+---
+
+- name: "Install packages"
+  dnf: 
+    name: "{{ item }}" 
+    state: present
+  with_items:
+        - postgresql
+        - postgresql-server
+
+
+- name: "Install Python packages"
+  apt : 
+    name: "{{ item }}"  
+    state: present
+  with_items:
+        - python3-psycopg
+
+
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Check if Database is initialized
+  ansible.buitin.stat:
+      path: /var/lib/pgsql/14/data/pg_hba.conf
+  register: result
+
+
+
+- name : Initialize the database
+  shell : /usr/pgsql-14/bin/postgresql-14-setup initdb
+  when: not result.stat.exists
+
+- name : Start service
+  ansible.builtin.service:
+  
+  
+
+
