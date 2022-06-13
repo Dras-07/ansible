@@ -1,0 +1,12 @@
+--- 
+
+
+- name: Java Installation
+  apt:
+   name: "{{ item }}"
+  state: present
+  with_items:
+    - openjdk-11-jdk
+    - openjdk-17-jdk
+
+

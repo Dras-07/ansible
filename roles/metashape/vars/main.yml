@@ -5,7 +5,8 @@ package_names:
  - maven
  - python3.9
  - openjdk-11-jdk
- - libxcb-xinerama0
+ - openjdk-17-jdk
+#  - libxcb-xinerama10
 
 
 arguments: #add arguments
@@ -17,3 +18,4 @@ metashape_directory: # add directory_path
 
 
 metashape_version: _1_8_3_
+

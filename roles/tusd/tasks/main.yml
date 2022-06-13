@@ -1,29 +1,13 @@
 ---
 
-- name : Install Helm
-  ansible.builtin.command : curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-  register : helm_install
-  become: true
-- debug:
-   var: helm_install.stdout_line
-
 - name : Install packages   
   apt : 
     name : {{item}}
     with_items: 
     - "{{package_names}}"
 
-# - name : tusd git clone
-#   command : git clone git@github.com:tus/tusd.git
-#   become : true
-#   register : git_clone
-# - debug : 
-#      var : git_clone.stdout_line
-# - debug : 
-#      var : git_clone.stderr_line
 
-
-- name: Example clone of a single branch
+- name: Clone tusd repo
   ansible.builtin.git:
     repo: git clone https://github.com/tus/tusd.git
     dest: {{git_directory}}
@@ -36,32 +20,13 @@
      var : git_clone.stderr_line
 
 
-
-  
-
 - name : tusd build 
   ansible.builtin.command : cd {{git_directory}}/tusd && {{tusd_build}}
-
-
-- name: Add helm repo
-  kubernetes.core.helm_repository:
-    name: skm
-    repo_url: "https://charts.sagikazarmark.dev"
-
-
-
-# - name : Install Chart
-#   kubernetes.core.helm:
-#     name: namespace_name
-#     namespace: default
-#     chart_ref: skm/tusd
-
-
-
-- name : installing tusd on kubernetes
-  command : helm install --generate-name --wait skm/tusd
-  register : install_on_kubernetes
-  when : helm is defined
+  register : tusd_build_var
+- debug : 
+   var : tusd_build_var.stdout_line
+- debug :
+   var: tusd_build_var.stderr_line
 
 
 - name : running tusd server

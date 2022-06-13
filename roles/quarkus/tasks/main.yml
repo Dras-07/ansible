@@ -5,8 +5,43 @@
   with_items:
      - curl -Ls https://sh.jbang.dev | bash -s - trust add https://repo1.maven.org/maven2/io/quarkus/quarkus-cli/
      - curl -Ls https://sh.jbang.dev | bash -s - app install --fresh --force quarkus@quarkusio
+  
+  
 
 
-- name : Create deepmatrix app
-  ansible.builtin.command: quarkus create app io.deepmatrix.service:data-service \
-    --extension=resteasy-reactive,resteasy-reactive-jackson,quarkus-smallrye-openapi,quarkus-hibernate-orm-panache,quarkus-jdbc-postgresq,hibernate-validator
+# - name : OpenAPI Generator
+#   ansible.builtin.command: npm install @openapitools/openapi-generator-cli -g
+
+
+# - name : Create deepmatrix app
+#   ansible.builtin.command: "{{item}}"
+#   with_item:
+#    - openapi-generator  generate -i ~/data-oas/data-service.yaml -g jaxrs-spec --library=quarkus --additional-properties=interfaceOnly=true,useSwaggerAnnotations=false,dateLibrary=java8,apiPackage=io.deepmatrix.service.api,modelPackage=io.deepmatrix.service.model  -o ~/output cp -rf ~/output1/src/gen/java/io/deepmatrix/ ~/data-service/src/main/java/io/deepmatrix/
+
+
+# - name : Copy  To Application.Properties
+#   ansible.builtin.copy:
+#   dest: {Application_prop_path}
+#   content : |
+#    quarkus.vertx.cluster.host=10.190.208.172
+#    quarkus.http.host=0.0.0.0
+#    quarkus.datasource.jdbc.url=jdbc:postgresql://68.183.87.6:5432/drishti
+#    quarkus.datasource.db-kind=postgresql 
+#    quarkus.datasource.username=dmadmin
+#    quarkus.datasource.password=Postgres@dm2022
+#    quarkus.hibernate-orm.database.generation=drop-and-create
+#    quarkus.hibernate-orm.log.sql=true
+
+ 
+
+
+# - name : Deploy Application in Prod
+#   ansible.builtin.command: quarkus build -Dquarkus.profile=prod
+
+
+# - name : Deploy Application in Demo
+#   ansible.builtin.command: quarkus build -Dquarkus.profile=demo
+
+
+# - name: GCP compute engine auth
+#   ansible.builtin.command: export GOOGLE_APPLICATION_CREDENTIALS=/Users/kaustubh/code/auth/gcp/sage-byte-348606-8274cf6a8f4f.json
