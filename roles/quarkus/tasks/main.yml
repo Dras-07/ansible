@@ -1,10 +1,15 @@
 ---
 
+
+
+
 - name : Quarkus Installation
   ansible.builtin.command: "{{item}}"
   with_items:
      - curl -Ls https://sh.jbang.dev | bash -s - trust add https://repo1.maven.org/maven2/io/quarkus/quarkus-cli/
      - curl -Ls https://sh.jbang.dev | bash -s - app install --fresh --force quarkus@quarkusio
+  environment:
+      JAVA_HOME: /usr/java/{{jdk_quarkus_version}}
   
   
 

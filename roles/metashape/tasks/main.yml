@@ -1,45 +1,71 @@
----
- 
+--- 
 
-
-- name: Clone Deepmatrix Metashape
-  ansible.builtin.git:
-    repo: https://github.com/DeepMatrixIO/metashape-job.git
-    dest: "{{metashape_directory}}"
-    separate_git_dir: /src/metashape-job.git
-    register : git_clone
-- debug : 
-     var : git_clone.stdout_line
-- debug : 
-     var : git_clone.stderr_line
-
-- name : Execute Metashape
-  command: mvn exec:java -Dexec.mainClass="io.deepmatrix.compute.JobScheduler"
-  become : true
-  register : metashape_exec
-- debug : 
-     var : metashape_exec.stdout_line
-- debug : 
-     var : metashape_exec.stderr_line
-
-- name : Install Packages
-  apt:
-   name: "{{item}}"
-   state: present
-   with_items: 
-    - "{{package_names}}"
-
-
-- name: Metashape Download
-  get_url: 
-     url: https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape{{metashape_version}}amd64.tar.gz
-     dest: "{{home_dir}}"
-  become: true   
-
-- name : Install Metashape
-  unarchive:
-   src: {{Metashape_tar}}
-   dest : {{Metashape_path}}
-   copy: no 
+- name: Install jdk-11
+  apt: 
+   name: "{{java-verison}}"
+  present: yes
   become: true
+
+
+- name: install python 3.8
+  ansible.builtin.command: "{{item}}"
+
+  with_items:
+   -  sudo apt update sudo apt install software-properties-common
+   - sudo add-apt-repository ppa:deadsnakes/ppa
+   - sudo apt install python3.8 python3.8 get-pip.py
+
   
+- name: Install and upgrade pip
+  ansible.builtin.command: sudo apt-get install python3-distutils curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
+
+- name : Install metashape
+  ansible.builtin.command:  sudo pip3 install Metashape-1.8.3-cp35.cp36.cp37.cp38-abi3-linux_x86_64.whl
+
+- name : Licence of AGISOFT
+  ansible.builtin.command:  export agisoft_LICENSE=/home/naresh/Downloads/metashape-pro/metashape_aug2022.lic
+
+- name : Library path
+  ansible.builtin.command: export LD_LIBRARY_PATH=~/code/photogrammetry/photo/jniLibs/linux64/:$LD_LIBRARY_PATH
+
+- name : QT dependencies
+  ansible.builtin.command: "{{items}}"
+  with_items:
+   - sudo apt install qtcreator -y
+   - sudo apt install build-essential -y
+   - sudo apt install qt5-default -y 
+   - apt install qt5-doc qt5-doc-html qtbase5-doc-html qtbase5-examples -y
+
+# - name: Clone Deepmatrix Metashape
+#   ansible.builtin.git:
+#     repo: https://github.com/DeepMatrixIO/metashape-job.git
+#     dest: "{{metashape_directory}}"
+#     separate_git_dir: /src/metashape-job.git
+#     register : git_clone
+# - debug : 
+#      var : git_clone.stdout_line
+# - debug : 
+#      var : git_clone.stderr_line
+
+# - name : Execute Metashape
+#   command: mvn exec:java -Dexec.mainClass="io.deepmatrix.compute.JobScheduler"
+#   become : true
+#   register : metashape_exec
+# - debug : 
+#      var : metashape_exec.stdout_line
+# - debug : 
+#      var : metashape_exec.stderr_line
+
+# - name: Metashape Download
+#   get_url: 
+#      url: https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape{{metashape_version}}amd64.tar.gz
+#      dest: "{{home_dir}}"
+#   become: true   
+
+# - name : Install Metashape
+#   unarchive:
+#    src: {{Metashape_tar}}
+#    dest : {{Metashape_path}}
+#    copy: no 
+#   become: true

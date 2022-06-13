@@ -2,3 +2,5 @@
 #variables
 
 content_path: #enter path
+
+jdk_quarkus_version: 17
