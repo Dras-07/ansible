@@ -2,6 +2,7 @@
 
 package_names:
  - git
+ 
 
-git_directory: #provide path
+git_directory: /
 tusd_build : go build -o tusd cmd/tusd/main.go

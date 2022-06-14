@@ -1,54 +1,75 @@
 ---
 #http://clouds.freeideas.cz/subdom/clouds/2017/08/02/ansible-install-golang-and-set-env-variables/
-- name  : check for current go version
-  command : bash -c "/usr/local/go/bin/go version|sed -e 's/go version go//g'|cut -d' ' -f1"
-  ignore_errors: true     
-  register: go_version
-  changed_when: false
+#https://www.cyberciti.biz/faq/how-to-install-gol-ang-on-ubuntu-linux/
 
 
-- name : continue only when verison is older
-  fail: 
-   msg="Version already exists"
-  when: go_version.stdout != "" and "go_version.stdout | version('{{new_go_version}}')"
-
-- name : Download Golang  
-  get_url : 
-     url: "https://storage.googleapis.com/golang/go{{new_go_version}}.linux-amd64.tar.gz"
-     dest: "{{home_dir}}"
-  become: true
 
 
-- name: Remove old installation
-  file:
-    path: /usr/local/go/
-    state: absent                       #directories will be recursively deleted, and files or symlinks will be unlinked.
-  become: true
-
-- name : Extract the Go 
-  unarchive:
-   src: "{{home_dir}}/go{{new_go_version}}.linux-amd.tar.gz"
-   dest : /usr/local
-   copy: no 
-  become: true
-
-- name : Create go direcories in home 
-  file :  
-    path : "{{item}}"
-    state : directory      # all intermediate subdirectories will be created if they do not exist
-    owner : "{{file_owner}}"
-    mode: 0755
+- name : Update update
+  ansible.builtin.command: {{item}}
   with_items:
-   - "{{home_dir}}/go"
-   - "{{home_dir}}/go/bin"
+   - apt update
+   - apt upgrade
+  
+- name : Install golang
+  apt:
+   name: go
+  state: present
+  become: true
 
-- name: modify .bashrc
-  blockinfile:
-      dest: "{{home_dir}}/.bashrc"
-      block: |
-        export GOPATH=$HOME/go
-        export GOBIN=$GOPATH/bin
-        export PATH=$GOBIN:$PATH:/usr/local/go/bin
-      marker: '# {mark} ANSIBLE MANAGED BLOCK - changes for golang'
-      insertafter: EOF
-      create: yes
+
+
+# - name  : check for current go version
+#   command : bash -c "/usr/local/go/bin/go version|sed -e 's/go version go//g'|cut -d' ' -f1"
+#   ignore_errors: true     
+#   register: go_version
+#   changed_when: false
+
+
+# - name : continue only when verison is older
+#   fail: 
+#    msg="Version already exists"
+#   when: go_version.stdout != "" and "go_version.stdout | version('{{new_go_version}}')"
+
+# - name : Download Golang  
+#   get_url : 
+#      url: "https://storage.googleapis.com/golang/go{{new_go_version}}.linux-amd64.tar.gz"
+#      dest: "{{home_dir}}"
+#   become: true
+
+
+# - name: Remove old installation
+#   file:
+#     path: /usr/local/go/
+#     state: absent                       #directories will be recursively deleted, and files or symlinks will be unlinked.
+#   become: true
+
+# - name : Extract the Go 
+#   unarchive:
+#    src: "{{home_dir}}/go{{new_go_version}}.linux-amd.tar.gz"
+#    dest : /usr/local
+#    copy: no 
+#   become: true
+
+# - name : Create go direcories in home 
+#   file :  
+#     path : "{{item}}"
+#     state : directory                # all intermediate subdirectories will be created if they do not exist
+#     owner : "{{file_owner}}"
+#     mode: 0777
+#     become: true 
+#   with_items:
+#    - "{{home_dir}}/go"
+#    - "{{home_dir}}/go/bin"
+
+# - name: modify .bashrc
+#   blockinfile:
+#       dest: "{{home_dir}}/.bashrc"
+#       block: |
+#         export GOPATH=$HOME/go
+#         export GOBIN=$GOPATH/bin
+#         export PATH=$GOBIN:$PATH:/usr/local/go/bin
+#       marker: '# {mark} ANSIBLE MANAGED BLOCK - changes for golang'
+#       insertafter: EOF
+#       create: yes
+

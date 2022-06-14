@@ -1,9 +1,7 @@
 ---
 
 
-home_dir:
-#path of home directory
-
+home_dir: /
 
 
 # add the latest version
@@ -11,4 +9,4 @@ new_go_version:
  1.18.3
 
 
-  
+file_owner: root

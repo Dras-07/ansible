@@ -4,8 +4,11 @@
   apt : 
     name : {{item}}
     with_items: 
-    - "{{package_names}}"
-
+    - git
+    - go
+  become: true
+  state: present
+  ignore_errors: yes
 
 - name: Clone tusd repo
   ansible.builtin.git:
@@ -14,23 +17,31 @@
     single_branch: yes
     version: master
     register : git_clone
+  become: true
 - debug : 
      var : git_clone.stdout_line
 - debug : 
      var : git_clone.stderr_line
+    
 
 
 - name : tusd build 
   ansible.builtin.command : cd {{git_directory}}/tusd && {{tusd_build}}
   register : tusd_build_var
+  become: true
 - debug : 
    var : tusd_build_var.stdout_line
 - debug :
    var: tusd_build_var.stderr_line
 
 
+
 - name : running tusd server
   ansible.builtin.command: ./tusd -upload-dir=./data --hooks-http http://localhost:8080/tusd/postcreate --hooks-enabled-events post-finish
+  ignore_errors: yes
+  become: true
+  register: tusd_run
+  failed_when : "'ERROR' in tusd_run.stderr"
 
 
 
